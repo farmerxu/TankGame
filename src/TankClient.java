@@ -6,9 +6,9 @@ public class TankClient extends Frame
 {
 	private Image offScreamImag = null;//用于解决双缓冲问题
 	
-	public static final int GAME_WIDE=800;
+	
 	public static final int GAME_LENGH=500;
-
+	public static final int GAME_WIDE=500;
 	Tank t = new Tank(30,30);
 //	Tank t2 = new Tank(60,60);
 //	Tank t1 = new Tank(90,90);
@@ -89,7 +89,7 @@ public class TankClient extends Frame
 	{
 		public void keyPressed(KeyEvent e) 
 		{
-			t.move(e);
+			t.keyPressed(e);
 //			int keyValue=e.getKeyCode();
 //		
 //			switch(keyValue)
@@ -104,6 +104,10 @@ public class TankClient extends Frame
 //					y+=5;break;
 //			}
 		}
-		
+
+		public void keyReleased(KeyEvent e)
+		{
+			t.keyReased(e);
+		}
 	}
 }
