@@ -12,15 +12,24 @@ public class Tank
 	private boolean right=false;
 	private boolean up=false;
 	private boolean down=false;
+	TankClient tc;
 	
 	private TankDirection dir = TankDirection.STOP;
 	
 	
 	enum TankDirection{U,D,L,R,LU,RU,LD,RD,STOP};
 	
-	public Tank(int x, int y) {
+	public Tank(int x, int y)
+	{
 		this.x = x;
 		this.y = y;
+	}
+	
+	//持有对方引用
+	public Tank(int x, int y,TankClient tc) 
+	{
+		this(x,y);
+		this.tc=tc;
 	}
 	
 	public void draw(Graphics g)
@@ -77,6 +86,8 @@ public class Tank
 		int keyValue=e.getKeyCode();
 		switch(keyValue)
 		{
+			case KeyEvent.VK_CONTROL:
+				tc.m=fire();break;
 			case KeyEvent.VK_RIGHT:
 				right=true;break;
 			case KeyEvent.VK_LEFT:
@@ -152,6 +163,12 @@ public class Tank
 			dir=TankDirection.STOP;
 		}
 	}
-
+	
+	public Misssle fire()
+	{
+		Misssle m=new Misssle(x,y,dir);
+		return m;
+		
+	}
 }
 

@@ -9,7 +9,9 @@ public class TankClient extends Frame
 	
 	public static final int GAME_LENGH=500;
 	public static final int GAME_WIDE=500;
-	Tank t = new Tank(30,30);
+	
+	Tank t = new Tank(30,30,this);//持有对方引用
+	Misssle m = null;
 //	Tank t2 = new Tank(60,60);
 //	Tank t1 = new Tank(90,90);
 	
@@ -38,6 +40,10 @@ public class TankClient extends Frame
 	{
 		
 		t.draw(g);
+		if(m!=null)
+		{
+			m.draw(g);
+		}
 //		t1.draw(g);
 //		t2.draw(g);
 //		Color c = null;
