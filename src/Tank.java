@@ -6,6 +6,8 @@ public class Tank
 {
 	private int x;
 	private int y;
+	public static final int WIDTH=30;
+	public static final int HEIGH=30;
 	public static final int XSPEED=5;
 	public static final int YSPEED=5;
 	private boolean left=false;
@@ -15,6 +17,7 @@ public class Tank
 	TankClient tc;
 	
 	private TankDirection dir = TankDirection.STOP;
+	private TankDirection ptdir=TankDirection.D;
 	
 	
 	enum TankDirection{U,D,L,R,LU,RU,LD,RD,STOP};
@@ -37,8 +40,37 @@ public class Tank
 		Color c = null;
 		c=g.getColor();
 		g.setColor(Color.red);
-		g.fillOval(x, y, 30,30 );
+		g.fillOval(x, y, WIDTH,HEIGH );
 		g.setColor(c);
+		
+		switch(ptdir)
+		{
+		case L:
+			g.drawLine(x + Tank.WIDTH/2, y + Tank.HEIGH/2, x, y + Tank.HEIGH/2);
+			break;
+		case LU:
+			g.drawLine(x + Tank.WIDTH/2, y + Tank.HEIGH/2, x, y);
+			break;
+		case U:
+			g.drawLine(x + Tank.WIDTH/2, y + Tank.HEIGH/2, x + Tank.WIDTH/2, y);
+			break;
+		case RU:
+			g.drawLine(x + Tank.WIDTH/2, y + Tank.HEIGH/2, x + Tank.WIDTH, y);
+			break;
+		case R:
+			g.drawLine(x + Tank.WIDTH/2, y + Tank.HEIGH/2, x + Tank.WIDTH, y + Tank.HEIGH/2);
+			break;
+		case RD:
+			g.drawLine(x + Tank.WIDTH/2, y + Tank.HEIGH/2, x + Tank.WIDTH, y + Tank.HEIGH);
+			break;
+		case D:
+			g.drawLine(x + Tank.WIDTH/2, y + Tank.HEIGH/2, x + Tank.WIDTH/2, y + Tank.HEIGH);
+			break;
+		case LD:
+			g.drawLine(x + Tank.WIDTH/2, y + Tank.HEIGH/2, x, y + Tank.HEIGH);
+			break;
+		}
+		
 		move();//注意move（）的地方
 	}
 	
@@ -79,6 +111,10 @@ public class Tank
 		case STOP:
 			break;
 		}
+		if(this.dir!=TankDirection.STOP)
+		{
+			this.ptdir=this.dir;
+		}
 	}
 	
 	public void keyPressed(KeyEvent e)
@@ -87,7 +123,7 @@ public class Tank
 		switch(keyValue)
 		{
 			case KeyEvent.VK_CONTROL:
-				tc.m=fire();break;
+				tc.m.add(this.fire());break;
 			case KeyEvent.VK_RIGHT:
 				right=true;break;
 			case KeyEvent.VK_LEFT:
@@ -97,7 +133,10 @@ public class Tank
 			case KeyEvent.VK_DOWN:
 				down=true;break;
 		}
-		MoveDir();
+		MoveDir();if(this.ptdir!=TankDirection.STOP)
+		{
+			this.ptdir=this.dir;
+		}
 	}
 	
 	public void keyReased(KeyEvent e)
@@ -166,7 +205,9 @@ public class Tank
 	
 	public Misssle fire()
 	{
-		Misssle m=new Misssle(x,y,dir);
+		int x = this.x + Tank.WIDTH/2 - Misssle.WIDTH/2;
+		int y = this.y + Tank.HEIGH/2 - Misssle.HEIGH/2;
+		Misssle m = new Misssle(x, y, this.ptdir);
 		return m;
 		
 	}

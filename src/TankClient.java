@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class TankClient extends Frame
 {
@@ -11,7 +12,7 @@ public class TankClient extends Frame
 	public static final int GAME_WIDE=500;
 	
 	Tank t = new Tank(30,30,this);//持有对方引用
-	Misssle m = null;
+	List<Misssle> m  =new ArrayList<Misssle>();
 //	Tank t2 = new Tank(60,60);
 //	Tank t1 = new Tank(90,90);
 	
@@ -40,9 +41,10 @@ public class TankClient extends Frame
 	{
 		
 		t.draw(g);
-		if(m!=null)
+		for(int i=0;i<m.size();i++)
 		{
-			m.draw(g);
+			Misssle m1=m.get(i);
+			m1.draw(g);
 		}
 //		t1.draw(g);
 //		t2.draw(g);
